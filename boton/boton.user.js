@@ -3,7 +3,7 @@
 // @namespace   Violentmonkey Scripts
 // @match       https://imperialtoys.myshopify.com/admin/orders/*
 // @grant       none
-// @version     1.1
+// @version     1.2
 // @author      JE, Rafa
 // @description 6/2/2022, 17:01:55
 // @downloadURL https://raw.githubusercontent.com/woxie/userscripts/main/boton/boton.user.js
@@ -53,17 +53,66 @@ function copyToClipboard(text) {
     document.execCommand("copy");
     document.body.removeChild(dummy);
 }
+  
+  function getSearchRegExp(f) {
+  return f.map(function(item) {
+    if (typeof(item) == "string") {
+      return new RegExp(item.replace(/[.?*+^$[\]\\(){}|-]/g, "\\$&"), "gi");
+    } else if (typeof(item) == "object" && item instanceof RegExp) {
+      return item;
+    } else if (typeof(item) == "object" && item instanceof Array) {
+      return new RegExp("(" + item.map(function(i) {
+        i.replace(/[.?*+^$[\]\\(){}|-]/g, "\\$&")
+      }).join("|") + ")");
+    }
+  });
+}
+
+var productos = document.getElementsByClassName("qfURq")[0];
+var palabrasExcluidas = ['preventa', 'pre venta', 'pre-venta', 'preorden', 'pre-orden', 'pre orden'];
+var productosString = "";
+// var palabrasClaveConSustituto = {
+//   'star wars': 'SW',
+//   '(Envío Incluido)': ''
+// }
+// var palabraClaveTitulo = [];
+// var palabraSustitutaTitulo = [];
+// for (const palabraClaveConSustituto in palabrasClaveConSustituto) {
+//   console.log(palabraClaveConSustituto)
+//   console.log(Object.keys(palabraClaveConSustituto)[0])
+// }
+var palabraClaveTitulo = ['SALDO: ','SALDO - ','SALDO ',' (Envío Incluido)',' (Envío Gratis)',' (Envio Incluido)',' (Envio Gratis)',' Envío Incluido',' Envío Gratis',' Envio Incluido',' Envio Gratis'];
+var palabraSustitutaTitulo = ['[S] ','[S] ','[S] ','','','','','','','',''];
+var search = getSearchRegExp(palabraClaveTitulo);
+for (var i = 0; i < productos.childElementCount; i++) {
+  if(!palabrasExcluidas.some(palabraExcluida => productos.children[i].children[0].children[1].children[0].children[0].children[0].innerText.toLowerCase().includes(palabraExcluida))) {
+    var productoTitulo = productos.children[i].children[0].children[1].children[0].children[0].children[0].innerText;
+    search.forEach(function(reg, index){
+
+			productoTitulo = productoTitulo.replace(reg, palabraSustitutaTitulo[index]);
+
+		});
+    productosString += "[E] " + productos.children[i].children[0].children[1].children[0].children[1].innerText.slice(-1) + "x " + productoTitulo + "\n"
+  }
+}
+console.log(productosString);
+
 
 var datos = document.querySelector("._1daZ2 > div:nth-child(1) > p:nth-child(1)").innerHTML.split("<br>");
 var nombre = datos[0];
 var direccionbreaks = '"'+ datos[1] + '\n' + datos[2] + '\n' + datos[3] + '\n' + datos[4] + '"';
 var direccionespacios = datos[1] + " " + datos[2] + " " + datos[3] + " " + datos[4];
 var numero = document.querySelector("._1daZ2 > div:nth-child(1) > p:nth-child(1) > span:nth-child(6)").innerText;
-var correo = document.querySelector(".Polaris-Button--textAlignLeft_1yjwh > span:nth-child(1) > span:nth-child(1)").innerText;
+var correo
+  try {
+	correo = document.querySelector(".Polaris-Button--textAlignLeft_1yjwh > span:nth-child(1) > span:nth-child(1)").innerText;
+} catch(error) {
+	correo = ""
+}
 var ordenconhash = document.querySelector(".Polaris-Header-Title_2qj8j").innerText;
 var ordensinhash = document.querySelector(".Polaris-Header-Title_2qj8j").innerText.split('#').join('');
 
-var copiarei = nombre + '\t' + numero + '\t' + direccionbreaks + '\t' + correo + '\t' + ordensinhash;
+var copiarei = '"' + productosString.slice(0, -1) + '"' + '\t' + nombre + '\t' + numero + '\t' + direccionbreaks + '\t' + correo + '\t' + ordensinhash;
 var copiarpc = nombre + '\t' + numero + '\t' + direccionbreaks + '\t' + correo;
 
 }
