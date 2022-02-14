@@ -3,9 +3,9 @@
 // @namespace   Violentmonkey Scripts
 // @match       https://imperialtoys.myshopify.com/admin/orders/*
 // @grant       none
-// @version     1.2
+// @version     1.3
 // @author      JE, Rafa
-// @description 6/2/2022, 17:01:55
+// @description Botones para copiar los elementos de una pedido y pegarlos en Excel
 // @downloadURL https://raw.githubusercontent.com/woxie/userscripts/main/boton/boton.user.js
 // @updateURL https://raw.githubusercontent.com/woxie/userscripts/main/boton/boton.user.js
 // ==/UserScript==
