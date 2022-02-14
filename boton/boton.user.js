@@ -35,7 +35,6 @@ boton.onclick = function(){
 
 const boton2 = document.createElement("button");
 boton2.innerHTML = "Copiar PC";
-cuadroderecha.insertBefore(document.createElement('br'), boton.nextSibling);
 cuadroderecha.insertBefore(boton2, boton.nextSibling);
 boton2.onclick = function(){
   copyToClipboard(copiarpc)
@@ -92,18 +91,28 @@ for (var i = 0; i < productos.childElementCount; i++) {
 			productoTitulo = productoTitulo.replace(reg, palabraSustitutaTitulo[index]);
 
 		});
+    
+    if (productoTitulo.includes("[S]")) {
+            productosString += "[S] " + productos.children[i].children[0].children[1].children[0].children[1].innerText.slice(-1) + "x " + productoTitulo.replace('[S] ','') + "\n"
+    }
+    else {
     productosString += "[E] " + productos.children[i].children[0].children[1].children[0].children[1].innerText.slice(-1) + "x " + productoTitulo + "\n"
+    }
   }
 }
-console.log(productosString);
 
 
 var datos = document.querySelector("._1daZ2 > div:nth-child(1) > p:nth-child(1)").innerHTML.split("<br>");
 var nombre = datos[0];
 var direccionbreaks = '"'+ datos[1] + '\n' + datos[2] + '\n' + datos[3] + '\n' + datos[4] + '"';
 var direccionespacios = datos[1] + " " + datos[2] + " " + datos[3] + " " + datos[4];
-var numero = document.querySelector("._1daZ2 > div:nth-child(1) > p:nth-child(1) > span:nth-child(6)").innerText;
+var numero
 var correo
+  try {
+	numero = document.querySelector("._1daZ2 > div:nth-child(1) > p:nth-child(1) > span:nth-child(6)").innerText;
+} catch(error) {
+	numero = ""
+}
   try {
 	correo = document.querySelector(".Polaris-Button--textAlignLeft_1yjwh > span:nth-child(1) > span:nth-child(1)").innerText;
 } catch(error) {
