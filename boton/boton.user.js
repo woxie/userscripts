@@ -6,6 +6,8 @@
 // @version     1.0
 // @author      -
 // @description 6/2/2022, 17:01:55
+// @downloadURL https://raw.githubusercontent.com/woxie/userscripts/main/boton/boton.user.js
+// @updateURL https://raw.githubusercontent.com/woxie/userscripts/main/boton/boton.user.js
 // ==/UserScript==
 
 var observer = new MutationObserver(resetTimer);
