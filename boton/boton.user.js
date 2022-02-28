@@ -3,7 +3,7 @@
 // @namespace   Violentmonkey Scripts
 // @match       https://imperialtoys.myshopify.com/admin/orders/*
 // @grant       none
-// @version     1.7
+// @version     1.8
 // @author      JE, Rafa
 // @description Botones para copiar los elementos de una pedido y pegarlos en Excel
 // @downloadURL https://raw.githubusercontent.com/woxie/userscripts/main/boton/boton.user.js
@@ -109,7 +109,7 @@ var direccionespacios = datos[1] + " " + datos[2] + " " + datos[3] + " " + datos
 var numero
 var correo
   try {
-	numero = document.querySelector("._1daZ2 > div:nth-child(1) > p:nth-child(1) > span:nth-child(6)").innerText;
+	numero = document.querySelector(".aG2SI > div:nth-child(1) > p:nth-child(1) > span:nth-child(6)").innerText;
 } catch(error) {
 	numero = ""
 }
