@@ -3,7 +3,7 @@
 // @namespace   Violentmonkey Scripts
 // @match       https://imperialtoys.myshopify.com/admin/orders/*
 // @grant       none
-// @version     1.6
+// @version     1.7
 // @author      JE, Rafa
 // @description Botones para copiar los elementos de una pedido y pegarlos en Excel
 // @downloadURL https://raw.githubusercontent.com/woxie/userscripts/main/boton/boton.user.js
@@ -67,7 +67,7 @@ function copyToClipboard(text) {
   });
 }
 
-var productos = document.getElementsByClassName("qfURq")[0];
+var productos = document.getElementsByClassName("TwAEH")[0];
 var palabrasExcluidas = ['preventa', 'pre venta', 'pre-venta', 'preorden', 'pre-orden', 'pre orden'];
 var productosString = "";
 // var palabrasClaveConSustituto = {
@@ -102,7 +102,7 @@ for (var i = 0; i < productos.childElementCount; i++) {
 }
 
 
-var datos = document.querySelector("._1daZ2 > div:nth-child(1) > p:nth-child(1)").innerHTML.split("<br>");
+var datos = document.querySelector(".aG2SI > div:nth-child(1) > p:nth-child(1)").innerHTML.split("<br>");
 var nombre = datos[0];
 var direccionbreaks = '"'+ datos[1] + '\n' + datos[2] + '\n' + datos[3] + '\n' + datos[4] + '"';
 var direccionespacios = datos[1] + " " + datos[2] + " " + datos[3] + " " + datos[4];
