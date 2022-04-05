@@ -3,7 +3,7 @@
 // @namespace   Violentmonkey Scripts
 // @match       https://imperialtoys.myshopify.com/admin/orders/*
 // @grant       none
-// @version     2.2
+// @version     2.3
 // @author      JE, Rafa
 // @description Botones para copiar los elementos de una pedido y pegarlos en Excel
 // @downloadURL https://raw.githubusercontent.com/woxie/userscripts/main/boton/boton.user.js
@@ -23,6 +23,10 @@ function resetTimer(changes, observer) {
 function action(observer) {
     observer.disconnect();
     // code
+
+if (document.body.contains(document.querySelector("#customer-note-collapsible"))) {
+  document.querySelector(".tZhTI > button:nth-child(1)").click();
+}
   
 cuadroderecha = document.querySelector("div.Polaris-Page-Header__Row_375v7:nth-child(2)");
   
@@ -106,7 +110,7 @@ var datos = document.querySelector(".aG2SI > div:nth-child(1) > p:nth-child(1)")
 var nombre = datos[0];
   
 if (document.body.contains(document.querySelector("#customer-note-collapsible"))) {
-  document.querySelector(".tZhTI > button:nth-child(1)").click();
+  //document.querySelector(".tZhTI > button:nth-child(1)").click();
 var direccionbreaks =  document.querySelector("#customer-note-collapsible").innerText;
 }
 else {
