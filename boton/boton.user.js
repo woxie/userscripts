@@ -3,7 +3,7 @@
 // @namespace   Violentmonkey Scripts
 // @match       https://imperialtoys.myshopify.com/admin/orders/*
 // @grant       none
-// @version     2.0
+// @version     2.1
 // @author      JE, Rafa
 // @description Botones para copiar los elementos de una pedido y pegarlos en Excel
 // @downloadURL https://raw.githubusercontent.com/woxie/userscripts/main/boton/boton.user.js
@@ -92,11 +92,11 @@ for (var i = 0; i < productos.childElementCount; i++) {
 
 		});
     
-    if (productoTitulo.includes("[S]")) {
-            productosString += "[S] " + productos.children[i].children[0].children[1].children[0].children[1].innerText.slice(-1) + "x " + productoTitulo.replace('[S] ','') + "\n"
+if (productoTitulo.includes("[S]")) {
+            productosString += "[S] " + productos.children[i].children[0].children[1].children[0].children[1].innerText.substring(productos.children[i].children[0].children[1].children[0].children[1].innerText.indexOf('× ') + 2) + "x " + productoTitulo.replace('[S] ','') + "\n"
     }
     else {
-    productosString += "[E] " + productos.children[i].children[0].children[1].children[0].children[1].innerText.slice(-1) + "x " + productoTitulo + "\n"
+    productosString += "[E] " + productos.children[i].children[0].children[1].children[0].children[1].innerText.substring(productos.children[i].children[0].children[1].children[0].children[1].innerText.indexOf('× ') + 2) + "x " + productoTitulo + "\n"
     }
   }
 }
