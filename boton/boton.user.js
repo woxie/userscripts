@@ -3,7 +3,7 @@
 // @namespace   Violentmonkey Scripts
 // @match       https://imperialtoys.myshopify.com/admin/orders/*
 // @grant       none
-// @version     2.4
+// @version     2.5
 // @author      JE, Rafa
 // @description Botones para copiar los elementos de un pedido y pegarlos en Excel
 // @downloadURL https://raw.githubusercontent.com/woxie/userscripts/main/boton/boton.user.js
@@ -111,21 +111,22 @@ var nombre = datos[0];
   
 if (document.body.contains(document.querySelector("#customer-note-collapsible"))) {
   //document.querySelector(".tZhTI > button:nth-child(1)").click();
-var direccionbreaks =  document.querySelector("#customer-note-collapsible").innerText;
+var direccionbreaks =  document.querySelector("#customer-note-collapsible").innerText.replace(/"/g,"");
 }
 else {
   
 if (document.body.contains(document.querySelector("span.Polaris-TextStyle--variationSubdued_1segu:nth-child(4)"))) {
-var direccionbreaks =  document.querySelector("span.Polaris-TextStyle--variationSubdued_1segu:nth-child(4)").innerText;
+var direccionbreaks =  document.querySelector("span.Polaris-TextStyle--variationSubdued_1segu:nth-child(4)").innerText.replace(/"/g,"");
 }
   else {
-var direccionbreaks = '"'+ datos[1] + '\n' + datos[2] + '\n' + datos[3] + '\n' + datos[4] + '"';
+var direccionbreaks = '"'+ datos[1].replace(/"/g,"") + '\n' + datos[2].replace(/"/g,"") + '\n' + datos[3].replace(/"/g,"") + '\n' + datos[4].replace(/"/g,"") + '"';
 //var direccionespacios = datos[1] + " " + datos[2] + " " + datos[3] + " " + datos[4];
 }
 }
   
 var numero
 var correo
+var nota
   try {
 	numero = document.querySelector(".aG2SI > div:nth-child(1) > p:nth-child(1) > span:nth-child(6)").innerText;
 } catch(error) {
@@ -136,10 +137,17 @@ var correo
 } catch(error) {
 	correo = ""
 }
+  try {
+	nota = document.querySelector(".zKCsv > span:nth-child(1)").innerText;
+  nota = ""
+} catch(error) {
+	nota = document.querySelector(".zKCsv").innerText;
+  nota = nota.replace(/(\r\n|\n|\r)/gm, "");
+}
 var ordenconhash = document.querySelector(".Polaris-Header-Title_2qj8j").innerText;
 var ordensinhash = document.querySelector(".Polaris-Header-Title_2qj8j").innerText.split('#').join('');
 
-var copiarei = '"' + productosString.slice(0, -1) + '"' + '\t' + nombre + '\t' + numero + '\t' + direccionbreaks + '\t' + correo + '\t' + ordensinhash;
-var copiarpc = nombre + '\t' + numero + '\t' + direccionbreaks + '\t' + correo;
+var copiarei = '"' + productosString.slice(0, -1) + '"' + '\t' + nombre + '\t' + numero + '\t' + direccionbreaks + '\t' + nota + '\t' + correo + '\t' + ordensinhash;
+var copiarpc = nombre + '\t' + numero + '\t' + direccionbreaks + '\t' + nota + '\t' + correo;
 
 }
